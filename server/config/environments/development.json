@@ -1,0 +1,14 @@
+{
+  "server": {
+    "port": "9001",
+    "frontEndHost": "http://localhost:4200",
+    "logoUrl": "/logo"
+  },
+  "mongo": {
+    "host": "localhost",
+    "username":"",
+    "password":"",
+    "db_name": "stocks",
+    "debug": true
+  }
+}
