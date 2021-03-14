@@ -1,0 +1,63 @@
+.header{
+  button{
+    color: #212531;
+    font-weight: 600;
+    &.login{
+      color: #4640DE;
+      background: #edebfc;
+      border-radius: 22px;
+      padding: 8px 30px;
+      text-decoration: none;
+    }
+  }
+  @media only screen and (min-width: 750px) {
+    .desktopHeader{
+      padding: 15px 5%;
+      border-bottom: 1px solid #E6E6E6;
+      img{
+        height: 54px;
+        margin-top: -10px;
+        margin-bottom: -10px;
+        margin-right: 20px;
+      }
+      .leftContent{
+        max-width: 500px;
+        @media only screen and (max-width: 960px) {
+          max-width: 400px;
+        }
+      }
+    }
+    .mobileHeader{
+      display: none;
+    }
+  }
+  .mobileHeader{
+    @media only screen and (max-width: 749px) {
+      .mobileHeaderContainer{
+        padding: 15px 20px;
+        .moreButton{
+          min-width: 0px;
+          .moreIcon{
+            height: 19px;
+          }
+        }
+        .appIcon{
+          height: 35px;
+          height: 46px;
+          margin-top: -10px;
+          margin-bottom: -10px;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 749px) {
+    .desktopHeader{
+      display: none;
+    }
+  }
+}
+
+.closeButton{
+  padding-top: 20px !important;
+  padding-left: 13px !important;
+}
