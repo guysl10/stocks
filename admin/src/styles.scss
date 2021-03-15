@@ -1,0 +1,61 @@
+/* Add application styles & imports to this file! */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,600;1,100;1,300;1,500&display=swap');
+@import "~placeholder-loading/src/scss/placeholder-loading";
+@import "~noty/src/noty.scss";
+@import "~noty/src/themes/mint.scss";
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+$theme-colors: (
+  "primary": #6D207C
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h-100vh{
+  height: 100vh;
+}
+
+.online{
+  background: #67c367;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 7px;
+}
+
+.offline{
+  background: red;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 7px;
+}
+
+.ag-filter-select{
+  display: none;
+}
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
