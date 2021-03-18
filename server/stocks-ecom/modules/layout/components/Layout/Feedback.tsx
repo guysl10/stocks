@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateFeedbackDialogState } from './redux/layout.action';
-import { feedbackService } from './shared/layoutServices';
+import { feedbackService } from './components/Layout/shared/layoutServices';
 
 function Feedback() {
   const feedbackOpenState = useSelector((state) => state.layoutState.feedbackOpenState);
