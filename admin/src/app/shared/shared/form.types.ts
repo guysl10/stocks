@@ -8,14 +8,14 @@ export enum eFormItemType {
 }
 
 interface IOptions {
-    label: string, 
+    label: string,
     value: string
 }
 export interface IFormItem {
     label: string,
     name: string,
-    type: eFormItemType, 
-    required: boolean, 
+    type: eFormItemType,
+    required: boolean,
     pattern?: RegExp,
     placeholder?: string
     options?: Array<IOptions>

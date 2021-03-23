@@ -1,0 +1,16 @@
+<ag-grid-angular
+  class="ag-theme-alpine gridContainer"
+  [rowData]="rowData"
+  (gridReady)="onGridReady($event)"
+  (sortChanged)="setGridData()"
+  (filterChanged)="setGridData()"
+  [columnDefs]="columnDefs">
+</ag-grid-angular>
+
+<div class="d-flex justify-content-end pagination-container">
+  <ngb-pagination
+    [page]="currentPage"
+    (pageChange)="onPageChange($event)"
+    [pageSize]="30"
+    [collectionSize]="totalRecords"></ngb-pagination>
+</div>
