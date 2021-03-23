@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap');
+
+*{
+  font-family: Poppins;
+}
+
+.hidden{
+  display: none !important;
+}
+
+.grid-action.edit-action{
+  color: #4740de;
+}
+.grid-action.view-action{
+  color: #4740de;
+}
+.grid-action.delete-action{
+  color: red;
+}
+
+.link-hover{
+  cursor: pointer;
+} 
