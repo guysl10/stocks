@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography, Button, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import classes from "../Cart.module.scss";
+import classes from "./Cart.module.scss";
 
 export interface ICart {
   product: {
@@ -93,7 +93,7 @@ export default function Cart() {
           <Button
             className={classes.createOrderButton}
             variant="contained"
-            color="secondary"
+            color="primary"
           >
             Create Order
           </Button>
