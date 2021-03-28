@@ -21,14 +21,14 @@ class LocalStorageClass {
   }
 
   getItem(key: string) {
-    this.localStorage.getItem(key);
+    return this.localStorage.getItem(key);
   }
 
   removeItem(key: string) {
     this.localStorage.removeItem(key);
   }
 
-  setJSONItem({ key, value }: {key: string, value: object}) {
+  setJSONItem(key: string, value: any) { {
     const updateValue = JSON.stringify(value);
     this.localStorage.setItem(key, updateValue);
   }
@@ -44,5 +44,5 @@ class LocalStorageClass {
   }
 }
 
-const LocalStorage = new LocalStorageClass();
-export default LocalStorage;
+const localStorage = new LocalStorageClass();
+export default localStorage;

@@ -1,5 +1,5 @@
 const STORAGE_KEYS = {
-  USER_KEY: 'erUser',
+  USER_KEY: 'ecomUser',
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
   LOGIN_REMEMBER_ME: 'loginData',

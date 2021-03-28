@@ -7,20 +7,22 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import styles from './Header.module.scss';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
-import { removeUserData, setUserData } from '../../../../auth/redux/auth.action';
 import { IHeaderItem } from './header.type';
+import LoginRegisterDialog from '../../../../auth/components/LoginRegisterDialog';
+import { updateLoginRegisterDialogState } from '../redux/layout.action';
+import { logoutService } from '../../../../auth/shared/auth-service';
 
 export default function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.authState.isUserLoggedIn);
 
-  const logout = () => {
-    dispatch(removeUserData());
+  const logout = async () => {
+    await logoutService(dispatch);
   };
 
   const openLoginPopup = () => {
-    dispatch(setUserData({}));
+    dispatch(updateLoginRegisterDialogState(true));
   };
 
   const gotoCart = () => {
@@ -57,6 +59,7 @@ export default function Header() {
 
   return (
     <div className={styles.header}>
+      <LoginRegisterDialog />
       <DesktopHeader headerMenu={headerMenu} />
       <MobileHeader headerMenu={headerMenu} />
     </div>
