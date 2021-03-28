@@ -1,13 +1,13 @@
 import LAYOUT_ACTIONS from './layout.action-types';
 
 const initialState = {
-  feedbackOpenState: false,
+  loginRegisterState: false,
 };
 
 export default function notificationReducer(state = initialState, action) {
   switch (action.type) {
-    case LAYOUT_ACTIONS.UPDATE_FEEDBACK_DIALOG_STATE: {
-      return { ...state, feedbackOpenState: action.payload };
+    case LAYOUT_ACTIONS.UPDATE_LOGIN_REGISTER_DIALOG_STATE: {
+      return { ...state, loginRegisterDialogState: action.payload };
     }
     default:
       return state;

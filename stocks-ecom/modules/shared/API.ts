@@ -4,6 +4,8 @@ import { API_END_POINT, API_STATUSES, SERVER_API_HOST } from './constants';
 import { message } from './utils';
 import appCache from './storage/cache';
 import { getStore } from '../../redux/store';
+import localStorage from './storage/LocalStorage';
+import STORAGE_KEYS from './storage/storageKeys';
 
 const { dispatch } = getStore();
 const byPassAuthAPIs = ['/authenticate'];
@@ -43,13 +45,18 @@ const handle401Error = async ({ exception }) => {
   // }
 };
 
+const checkLoginUrls = (url) => url.indexOf('/login') > -1
+|| url.indexOf('register') > -1
+|| url.indexOf('checkLogin') > -1
+|| url.indexOf('getNewAccessTokenFromRefreshToken') > -1;
+
 const handleAPIError = async ({
                                 exception, url, apiData, hideErrorMessage,
 // eslint-disable-next-line consistent-return
                               }) => {
   const { throwException = true, errorMessage, showAPIError } = apiData;
   if (exception.response && (exception.response.status === 401 || exception.response.status === 403)
-    && url !== '/checkLogin' && url !== '/employee' && url !== '/authenticate' && url !== '/refreshToken') {
+    && !checkLoginUrls(url)) {
     try {
       return await handle401Error({ exception });
     } catch (e) {
@@ -63,9 +70,9 @@ const handleAPIError = async ({
     if (!hideErrorMessage) {
       let errMessage = errorMessage;
       if (showAPIError) {
-        errMessage = get(exception, 'response.data.message');
+        errMessage = get(exception, 'response.data.error.message');
       }
-      message.error(errMessage || exception.message || 'Something went wrong.');
+      message.error(errMessage || 'Something went wrong.');
     }
     if (throwException) {
       throw exception;
@@ -86,6 +93,7 @@ export interface IAPIOptions {
   fromServer?: boolean,
   hideErrorMessage?: boolean,
   errorMessage?: string
+  showAPIError?: boolean,
 }
 
 const API = async (apiData: IAPIOptions): Promise<any> => {
@@ -105,12 +113,12 @@ const API = async (apiData: IAPIOptions): Promise<any> => {
     let apiUrl = `/${url}`.replace(/\/\//g, '/');
     let response;
     // const accessToken = getItem(ACCESS_TOKEN);
-    const accessToken = '';
+    const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     let requestHeaders = headers;
     if (byPassAuthAPIs.indexOf(url) === -1) {
       requestHeaders = {
         ...headers,
-        Authorization: `Bearer ${accessToken}`,
+        AccessToken: `Bearer ${accessToken}`,
         Accept: 'application/json, text/plain',
       };
     }
@@ -120,7 +128,7 @@ const API = async (apiData: IAPIOptions): Promise<any> => {
       // DO append the API end point only if the url is not the service url
       apiUrl = `${API_END_POINT}${apiUrl}`;
     }
-    console.log(apiUrl);
+    //console.log(apiUrl);
     if (cache && getAPICacheData({ path: apiUrl, queryParams })) {
       response = getAPICacheData({ path: apiUrl, queryParams });
     } else {

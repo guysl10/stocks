@@ -34,7 +34,7 @@ export default function DesktopHeader({ headerMenu } :IDesktopHeaderPros) {
                 color="inherit"
               >
                 {menuItem.icon}
-                {' '}
+                &nbsp;
                 {menuItem.title}
               </Button>
             </Grid>

@@ -8,9 +8,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
 import Link from '@material-ui/core/Link';
-import styles from './Header.module.scss';
+import SearchIcon from '@material-ui/icons/Search';
+import classes from './Header.module.scss';
 import Button from '../../../../shared/components/Button';
 import { IHeaderItem } from './header.type';
+import SearchProduct from './SearchProduct';
 
 const Transition = React.forwardRef((
   // eslint-disable-next-line react/require-default-props
@@ -22,6 +24,7 @@ const Transition = React.forwardRef((
 export default function MobileHeader({ headerMenu } :
                                        {headerMenu: Array<IHeaderItem>}) {
   const [open, setOpen] = useState(false);
+  const [searchOpenState, setSearchOpenState] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -36,11 +39,15 @@ export default function MobileHeader({ headerMenu } :
     clickMethod();
   };
 
+   const toggleSearchState = () => {
+    setSearchOpenState(!searchOpenState);
+  };
+
   return (
-    <div className={styles.mobileHeader}>
+    <div className={classes.mobileHeader}>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <Grid container>
-          <Button onClick={handleClose} plain className={styles.closeButton}>
+          <Button onClick={handleClose} plain className={classes.closeButton}>
             <CloseIcon />
           </Button>
         </Grid>
@@ -56,15 +63,22 @@ export default function MobileHeader({ headerMenu } :
           ))}
         </List>
       </Dialog>
-      <Grid container justify="space-between" alignItems="center" className={styles.mobileHeaderContainer}>
-        <Button onClick={openMenu} plain className={styles.moreButton}>
-          <img src="/images/mobile-side-menu.svg" alt="more options" className={styles.moreIcon} />
+      <Grid container justify="space-between" alignItems="center" className={classes.mobileHeaderContainer}>
+        <Button onClick={openMenu} plain className={classes.moreButton}>
+          <img src="/images/mobile-side-menu.svg" alt="more options" className={classes.moreIcon} />
         </Button>
         <Link href="/">
-          <img src="/images/header-icon.png" alt="app logo" className={styles.appIcon} />
+          <img src="/images/header-icon.png" alt="app logo" className={classes.appIcon} />
         </Link>
-        <Grid item />
+        <Button onClick={toggleSearchState} plain className={classes.moreButton}>
+          <SearchIcon />
+        </Button>
       </Grid>
+      {searchOpenState ? (
+        <div className={classes.searchContainer}>
+          <SearchProduct />
+        </div>
+      ) : null}
     </div>
   );
 }
