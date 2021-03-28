@@ -1,0 +1,22 @@
+<div class="container-fluid h-100vh login-form">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="form-wrapper">
+      <div class="logo-container">
+        <img src="/assets/images/logo.png" class="logo" alt="App Icon"/>
+      </div>
+      <form [formGroup]="loginFormGroup" (ngSubmit)="login()" class="form-container">
+        <div class="login-header">Login to your account</div>
+        <app-form-item-builder
+          [fullWidthControls]="true"
+          [formItems]="loginFormItems" [formGroup]="loginFormGroup"
+          [isFormSubmitted]="isFormSubmitted"
+        ></app-form-item-builder>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+        <button class="btn btn-primary btn-block" [disabled]="isLoading">Login</button>
+      </form>
+      <div class="footer">
+        © 2021 Stocks. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
