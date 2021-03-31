@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { isEmpty, get } from 'lodash';
+import { isEmpty, get, set } from 'lodash';
 import { API_END_POINT, API_STATUSES, SERVER_API_HOST } from './constants';
 import { message } from './utils';
 import appCache from './storage/cache';
 import { getStore } from '../../redux/store';
 import localStorage from './storage/LocalStorage';
 import STORAGE_KEYS from './storage/storageKeys';
+import { removeUserStorageData, setUserDataToStorage } from '../auth/shared/auth-storage';
 
 const { dispatch } = getStore();
 const byPassAuthAPIs = ['/authenticate'];
@@ -25,59 +26,69 @@ const setAPIDataToCache = ({ path, queryParams, data }) => {
   });
 };
 
-const handle401Error = async ({ exception }) => {
-  // try {
-  // eslint-disable-next-line no-use-before-define
-  // const {userInfo, accessToken, refreshToken} = await callAPI({
-  //   method: 'put',
-  //   url: '/refreshToken',
-  //   hideErrorMessage: true,
-  //   showLoading: true,
-  //   headers: {refreshtoken: `Bearer ${getItem(REFRESH_TOKEN)}`}
-  // });
-  // setUserData({userInfo, accessToken, refreshToken, dispatch: getStore().dispatch});
-  // eslint-disable-next-line no-use-before-define
-  // return await callAPI(apiData);
-  throw exception;
-  // } catch (error) {
-  //   // getStore().dispatch(logout());
-  //   throw error;
-  // }
+const retryWithRefreshToken = async ({ apiData, exception }) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    const response = await API({
+      url: '/v1/getNewAccessTokenFromRefreshToken',
+      // hideErrorMessage: true,
+      headers: { refreshToken },
+    });
+    setUserDataToStorage(response, dispatch);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    return await API(apiData);
+  } catch (error) {
+    removeUserStorageData(dispatch);
+    throw exception;
+  }
 };
 
 const checkLoginUrls = (url) => url.indexOf('/login') > -1
 || url.indexOf('register') > -1
-|| url.indexOf('checkLogin') > -1
 || url.indexOf('getNewAccessTokenFromRefreshToken') > -1;
+// || url.indexOf('checkLogin') > -1
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __handleFinalError = ({
+  hideErrorMessage, errorMessage, showAPIError, throwException, exception,
+}) => {
+  if (!hideErrorMessage) {
+    let errMessage = errorMessage;
+    if (!errMessage && showAPIError) {
+      errMessage = get(exception, 'response.data.error.message');
+    }
+    message.error(errMessage || 'Something went wrong.');
+  }
+  if (throwException) {
+    throw exception;
+    // throw new HttpError(exception.message, exception.status, exception.json);
+  }
+};
 
 const handleAPIError = async ({
                                 exception, url, apiData, hideErrorMessage,
 // eslint-disable-next-line consistent-return
                               }) => {
   const { throwException = true, errorMessage, showAPIError } = apiData;
+  const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
   if (exception.response && (exception.response.status === 401 || exception.response.status === 403)
-    && !checkLoginUrls(url)) {
+    && !checkLoginUrls(url) && refreshToken) {
     try {
-      return await handle401Error({ exception });
+      return await retryWithRefreshToken({ apiData, exception });
     } catch (e) {
-      message.error(exception.message || 'Something went wrong.');
-      if (throwException) {
-        throw exception;
-        // throw new HttpError(exception.message, exception.status, exception.json);
-      }
+      __handleFinalError({
+        hideErrorMessage: false,
+        errorMessage: 'User login is expired, please login again to continue.',
+        showAPIError,
+        throwException,
+        exception,
+      });
     }
   } else {
-    if (!hideErrorMessage) {
-      let errMessage = errorMessage;
-      if (showAPIError) {
-        errMessage = get(exception, 'response.data.error.message');
-      }
-      message.error(errMessage || 'Something went wrong.');
-    }
-    if (throwException) {
-      throw exception;
-      // throw new HttpError(exception.message, exception.status, exception.json);
-    }
+    __handleFinalError({
+      hideErrorMessage, errorMessage, showAPIError, throwException, exception,
+    });
   }
 };
 
