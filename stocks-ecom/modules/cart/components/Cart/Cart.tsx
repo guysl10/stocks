@@ -9,7 +9,7 @@ import { ICartItem } from '../../shared/cart.type';
 export default function Cart() {
 const sampleCartItem = {
     product: {
-      name: 'test xyz',
+      name: 'test xyz, test xyz, test xyz, test xyz, test xyz, test xyz, test xyz, test xyz, test xyz, test xyz, test xyz',
       imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGiZJz0qJq_d2SUYWm6OlzELTfYoeAGUOj6g&usqp=CAU',
       size: 'sm',
     },
@@ -26,9 +26,6 @@ const sampleCartItem = {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < 10; i++) {
       const tmpProduct = { ...sampleCartItem };
-      if (i % 2 === 0) {
-        tmpProduct.name += sampleCartItem.name;
-      }
       tmpProduct.productId += i;
       tempCartArray.push(tmpProduct);
     }
@@ -42,18 +39,6 @@ const sampleCartItem = {
           <Button className={classes.button} variant="outlined">
             Clear Cart
           </Button>
-        </Grid>
-        <Grid
-          container
-          item
-          justify="space-between"
-          className={classes.listTitle}
-        >
-          <Typography className={classes.productContainer}>Product</Typography>
-          <Typography>Price</Typography>
-          <Typography>Quantity</Typography>
-          <Typography>Total</Typography>
-          <Typography/>
         </Grid>
        {cartItems.map((cartItem) => (
           <CartItem key={cartItem.productId} cartItem={cartItem} />
