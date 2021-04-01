@@ -10,17 +10,10 @@ export default function ProductGridItem({ product }: {product:Product}) {
       <Grid item className={classes.socksContainer}>
         <Grid container className={classes.imageContainer} alignItems="center" justify="center">
           <img
-            className={classes.imgContainer}
             src={product.imageUrl}
             alt="Product Img"
           />
         </Grid>
-        {/* <Grid
-          container
-          className={classes.textContainer}
-          direction="column"
-          justify="space-between"
-        > */}
         <Grid item>
           <Typography className={classes.socksName}>
             {product.name}
@@ -31,8 +24,12 @@ export default function ProductGridItem({ product }: {product:Product}) {
             {product.size}
           </Typography>
         </Grid>
-        <Grid className={classes.priceQuantityContainer}
-        container justify="space-between" alignItems="center">
+        <Grid
+          className={classes.priceQuantityContainer}
+          container
+          justify="space-between"
+          alignItems="center"
+        >
           <Typography className={classes.socksPrice}>
             $
             {product.price}
