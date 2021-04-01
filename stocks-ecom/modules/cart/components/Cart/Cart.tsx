@@ -1,21 +1,40 @@
-import React from "react";
-import { Grid, Typography, Button, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import classes from "./Cart.module.scss";
+import React, { useEffect, useState } from 'react';
+import {
+  Grid, Typography, Button,
+} from '@material-ui/core';
+import classes from './Cart.module.scss';
+import CartItem from '../CartItem/CartItem';
+import { ICartItem } from '../../shared/cart.type';
 
-export interface ICart {
-  product: {
-    name: string;
-    size: string;
-  };
-  productId: string;
-  productPrice: number;
-  quantity: number;
-  cartItemTotal: number;
-}
 export default function Cart() {
-  const arr = [1, 2];
-  return (
+const sampleCartItem = {
+    product: {
+      name: 'test xyz',
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGiZJz0qJq_d2SUYWm6OlzELTfYoeAGUOj6g&usqp=CAU',
+      size: 'sm',
+    },
+    productId: '123',
+    productPrice: 12.335,
+    quantity: 12,
+    cartItemTotal: 12,
+  };
+  const [orderTotal, setOrderTotal] = useState(0);
+  const [cartItems, setCartItems] = useState<Array<ICartItem>>([]);
+
+  useEffect(() => {
+    const tempCartArray = [];
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 10; i++) {
+      const tmpProduct = { ...sampleCartItem };
+      if (i % 2 === 0) {
+        tmpProduct.name += sampleCartItem.name;
+      }
+      tmpProduct.productId += i;
+      tempCartArray.push(tmpProduct);
+    }
+    setCartItems(tempCartArray);
+  });
+    return (
     <div className={classes.cartContainer}>
       <Grid container>
         <Grid container item justify="space-between" className={classes.header}>
@@ -34,48 +53,11 @@ export default function Cart() {
           <Typography>Price</Typography>
           <Typography>Quantity</Typography>
           <Typography>Total</Typography>
-          <Typography></Typography>
+          <Typography/>
         </Grid>
-        {arr.map(item => {
-          return (
-            <Grid
-              container
-              item
-              justify="space-between"
-              className={classes.cartItem}
-            >
-              <Grid container item className={classes.productContainer}>
-                <Grid className={classes.imageContainer}>
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGiZJz0qJq_d2SUYWm6OlzELTfYoeAGUOj6g&usqp=CAU"
-                    alt="Product Img"
-                  />
-                </Grid>
-                <Grid className={classes.productTitle}>
-                  <Typography className={classes.productName}>
-                    Set of Socks
-                  </Typography>
-                  <br />
-                  <Typography className={classes.productSize}>
-                    Size: Medium
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography className={classes.productPrice}>$1.45</Typography>
-              <Grid container item className={classes.quantityContainer}>
-                <Button className={classes.quantityButton}>- </Button>
-                <Typography>1</Typography>
-                <Button className={classes.quantityButton}>+</Button>
-              </Grid>
-              <Typography className={classes.productTotal}>$1.45</Typography>
-              <Typography>
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-              </Typography>
-            </Grid>
-          );
-        })}
+       {cartItems.map((cartItem) => (
+          <CartItem key={cartItem.productId} cartItem={cartItem} />
+        ))}
         <Grid container item justify="flex-end">
           <Grid
             container
@@ -84,9 +66,18 @@ export default function Cart() {
             className={classes.totalContainer}
           >
             <Typography>
-              <b>Total:</b> <br /> 2 items
+              <b>Total:</b>
+              {' '}
+              <br />
+              {' '}
+              {cartItems.length}
+              {' '}
+              items
             </Typography>
-            <Typography className={classes.totalAmount}>$16.45</Typography>
+            <Typography className={classes.totalAmount}>
+              $
+              {orderTotal}
+            </Typography>
           </Grid>
         </Grid>
         <Grid container justify="flex-end">
