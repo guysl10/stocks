@@ -71,6 +71,8 @@ export const toFixedString = (floatValue) => {
   return '0.00';
 };
 
+export const toFixedNumber = (number) => Number(Number(number).toFixed(2));
+
 export const parseNumber = (numberValue) => {
   const parsedNumber = Number(numberValue);
   return isNaN(parsedNumber) ? 0 : parsedNumber;

@@ -27,4 +27,14 @@
     width: 300px;
     border-radius: 20px;
   }
+  .emptyCart{
+    min-height: 400px;
+    .emptyCartInner{
+      text-align: center;
+    }
+    .cartIcon{
+      color: #6D207C;
+      font-size: 100px;
+    }
+  }
 }

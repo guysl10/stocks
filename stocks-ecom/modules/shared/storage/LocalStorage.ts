@@ -33,8 +33,8 @@ class LocalStorageClass {
     this.localStorage.setItem(key, updateValue);
   }
 
-  getJSONItem(key: string) {
-    let returnValue = {};
+  getJSONItem(key: string): any {
+    let returnValue = {} as any;
     try {
       returnValue = JSON.parse(this.localStorage.getItem(key));
     } catch (e) {

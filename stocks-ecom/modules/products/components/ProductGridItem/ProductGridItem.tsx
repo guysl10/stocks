@@ -34,7 +34,7 @@ export default function ProductGridItem({ product }: {product:Product}) {
             $
             {product.price}
           </Typography>
-          <AddRemoveButton />
+          <AddRemoveButton product={product} />
         </Grid>
         {/* </Grid> */}
       </Grid>

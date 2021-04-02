@@ -3,11 +3,24 @@ import {
   Grid, Typography, IconButton, Divider
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useDispatch } from 'react-redux';
 import classes from './CartItem.module.scss';
 import { ICartItem } from '../../shared/cart.type';
 import AddRemoveButton from '../../../products/components/AddRemoveButton/AddRemoveButton';
+import { updateCartItemQuantity } from '../../redux/cart.action';
+import { removeCartItemService } from '../../shared/cartService';
 
 export default function CartItem({ cartItem }: {cartItem: ICartItem}) {
+  const dispatch = useDispatch();
+
+  const removeItem = async (product) => {
+    dispatch(updateCartItemQuantity({
+      quantity: 0,
+      product,
+    }));
+    await removeCartItemService({ productId: product._id });
+  };
+  
   return (
     <Grid
       item
@@ -46,10 +59,10 @@ export default function CartItem({ cartItem }: {cartItem: ICartItem}) {
           container
           className={classes.quantityContainer}
         >
-          <AddRemoveButton value={cartItem.quantity} />
+          <AddRemoveButton cartItem={cartItem} />
           <Divider orientation="vertical" flexItem />
           <Typography>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={() => removeItem(cartItem.product)}>
               <DeleteIcon />
             </IconButton>
           </Typography>
