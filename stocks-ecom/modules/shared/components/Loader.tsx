@@ -1,10 +1,11 @@
+import { CircularProgress, Grid } from '@material-ui/core';
 import React from 'react';
 
 function Loader() {
   return (
-    <div>
-      Loading
-    </div>
+    <Grid container style={{ height: 400 }} justify="center" alignItems="center">
+      <CircularProgress />
+    </Grid>
   );
 }
 
