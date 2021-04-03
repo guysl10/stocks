@@ -5,9 +5,21 @@ import CART_ACTIONS from './cart.action-types';
 
 const initialState = {
   cartItems: [],
+  totalAmount: 0,
+  totalProducts: 0,
 };
 
-export default function cartReducer(state = initialState, action) {
+const getTotalItemsAndPrice = (cartItems) => {
+  let totalAmount = 0;
+  let totalProducts = 0;
+  cartItems.forEach((item) => {
+    totalProducts += item.quantity;
+    totalAmount += item.cartItemTotal;
+  });
+  return { totalAmount, totalProducts };
+};
+
+export default function cartReducer(state = cloneDeep(initialState), action) {
   switch (action.type) {
     case CART_ACTIONS.UPDATE_QUANTITY: {
       const { quantity, product } = action.payload;
@@ -29,10 +41,20 @@ export default function cartReducer(state = initialState, action) {
           existedCartItem.cartItemTotal = toFixedNumber(product.price * quantity);
         }
       }
-      return { ...state, cartItems: newCartItems };
+      
+      return { ...state, ...getTotalItemsAndPrice(newCartItems), cartItems: newCartItems };
     }
-    case CART_ACTIONS.UPDATE_CART_ITEMS: {
-      return { ...state, cartItems: action.payload };
+    case CART_ACTIONS.UPDATE_CART_DETAILS: {
+      const cartDetails = action.payload;
+      return {
+        ...state,
+        cartItems: cartDetails.cartItems,
+        totalAmount: cartDetails.totalAmount,
+        totalProducts: cartDetails.totalProducts,
+      };
+    }
+    case CART_ACTIONS.CLEAR_CART: {
+      return cloneDeep(initialState);
     }
     default:
       return state;

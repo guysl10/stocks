@@ -7,7 +7,12 @@ export const updateCartItemQuantity = (cartData: {quantity: number, product: Pro
   payload: cartData,
 });
 
-export const updateCartItems = (cartItems: Array<ICartItem>) => ({
-  type: CART_ACTIONS.UPDATE_CART_ITEMS,
-  payload: cartItems,
+export const updateCartDetails = (cartDetails:
+  {cartItems: Array<ICartItem>, totalAmount: number, totalProducts: number}) => ({
+  type: CART_ACTIONS.UPDATE_CART_DETAILS,
+  payload: cartDetails,
+});
+
+export const clearCartAction = () => ({
+  type: CART_ACTIONS.CLEAR_CART,
 });
