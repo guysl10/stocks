@@ -1,8 +1,8 @@
 import API from '../../shared/API';
 import localStorage from '../../shared/storage/LocalStorage';
 import STORAGE_KEYS from '../../shared/storage/storageKeys';
-import { sleep } from '../../shared/utils';
-import { updateCartItems } from '../redux/cart.action';
+import { clearCartAction, updateCartDetails } from '../redux/cart.action';
+
 
 export const removeCartItemService = async ({ productId }) => {
   const { userId } = localStorage.getJSONItem(STORAGE_KEYS.USER_KEY);
@@ -34,5 +34,19 @@ export const getCartDetailService = async (dispatch) => {
   const { userId } = localStorage.getJSONItem(STORAGE_KEYS.USER_KEY);
   // eslint-disable-next-line no-return-await
   const cartDetails = await API({ url: `/v1/carts/${userId}`, hideErrorMessage: true });
-  dispatch(updateCartItems(cartDetails.cartItems));
+  dispatch(updateCartDetails(cartDetails));
+};
+
+export const clearCartService = async (dispatch) => {
+  const { userId } = localStorage.getJSONItem(STORAGE_KEYS.USER_KEY);
+  // eslint-disable-next-line no-return-await
+  await API({ url: '/v1/carts/clear-cart', method: 'delete', body: { userId } });
+  dispatch(clearCartAction());
+};
+
+export const createOrderFromCartService = async (dispatch) => {
+  const { userId } = localStorage.getJSONItem(STORAGE_KEYS.USER_KEY);
+  // eslint-disable-next-line no-return-await
+  await API({ url: '/v1/orders', method: 'post', body: { userId } });
+  dispatch(clearCartAction());
 };

@@ -26,6 +26,9 @@ export default function Header() {
   };
 
   const gotoCart = () => {
+    if (!isUserLoggedIn) {
+      return dispatch(updateLoginRegisterDialogState(true));
+    }
     router.push('/cart');
   };
 

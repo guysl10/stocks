@@ -1,16 +1,22 @@
 import { Button, Grid } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Product } from '../../shared/product.type';
 import useStyles from './AddRemoveButton.style';
 import { updateCartItemQuantity } from '../../../cart/redux/cart.action';
 import { updateCartItemQuantityService } from '../../../cart/shared/cartService';
 import { ICartItem } from '../../../cart/shared/cart.type';
+import { updateLoginRegisterDialogState } from '../../../layout/components/Layout/redux/layout.action';
 
 function AddRemoveButton({ product, cartItem }: {product: Product, cartItem: ICartItem }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isUserLoggedIn = useSelector((state) => state.authState.isUserLoggedIn);
   const [quantity, setQuantity] = useState(product?.quantity || cartItem?.quantity || 0);
+
+  useEffect(() => {
+    setQuantity(product?.quantity || 0);
+  }, [product]);
 
   const updateQuantity = async (newQuantity) => {
     const productRecord = product || cartItem.product;
@@ -21,7 +27,11 @@ function AddRemoveButton({ product, cartItem }: {product: Product, cartItem: ICa
     }));
     await updateCartItemQuantityService({ productId: productRecord._id, quantity: newQuantity });
   };
+  
   const increment = () => {
+    if (!isUserLoggedIn) {
+      return dispatch(updateLoginRegisterDialogState(true));
+    }
     updateQuantity(quantity + 1);
   };
 

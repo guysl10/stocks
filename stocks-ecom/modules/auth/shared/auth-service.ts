@@ -1,3 +1,4 @@
+import { clearCartAction, updateCartDetails } from '../../cart/redux/cart.action';
 import { updateLoginRegisterDialogState } from '../../layout/components/Layout/redux/layout.action';
 import API from '../../shared/API';
 import { removeUserStorageData, setUserDataToStorage } from './auth-storage';
@@ -13,7 +14,6 @@ export const loginService = async (loginData, dispatch) => {
     dispatch(updateLoginRegisterDialogState(false));
 	setUserDataToStorage(response, dispatch);
   } catch (e) {
-    // console.error('Error in login', e);
   }
 };
 
@@ -27,7 +27,6 @@ export const signUpService = async (signUpData, dispatch) => {
     });
     await loginService({ email: signUpData.email, password: signUpData.password }, dispatch);
   } catch (e) {
-    // console.error('error in sign up', e);
   }
 };
 
@@ -38,8 +37,8 @@ export const logoutService = async (dispatch) => {
       hideErrorMessage: true,
     });
   } catch (e) {
-    console.error('Error in logout', e);
   } finally {
+  dispatch(clearCartAction());
 	removeUserStorageData(dispatch);
   }
 };
@@ -52,7 +51,6 @@ export const checkLogin = async (dispatch) => {
     });
     setUserDataToStorage(response, dispatch);
   } catch (e) {
-    console.error('Error in checklogin', e);
     removeUserStorageData(dispatch);
   }
 };
