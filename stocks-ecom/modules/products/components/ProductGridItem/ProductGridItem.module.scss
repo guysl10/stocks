@@ -1,13 +1,17 @@
 $productItemWidth: 230px;
 $productItemInnerWidth: 190px;
-.socksContainer {
+.productItemContainerWrapper{
+  @media only screen and (max-width: 531px) {
+    width: 100%;
+  }
+  .productItemContainer {
     border: 1px solid #d1d1d1;
     padding: 20px;
     border-radius: 10px;
     min-height: 100%;
     width: $productItemWidth;
     @media only screen and (max-width: 531px) {
-        width: 100%;
+      width: 100%;
     }
     position: relative;
     padding-bottom: 58px;
@@ -27,19 +31,20 @@ $productItemInnerWidth: 190px;
       }
     }
     .socksName {
-        font-weight: bold;
-        max-width: $productItemInnerWidth;
+      font-weight: 500;
+      max-width: $productItemInnerWidth;
     }
     .socksSize {
-        font-size: 11px;
-        color: #969197;
+      font-size: 11px;
+      color: #969197;
     }
     .socksPrice {
-        font-weight: bold;
+      font-weight: 500;
     }
     .priceQuantityContainer{
-        position: absolute;   
-        bottom: 20px;
-        width: calc(100% - 40px);
+      position: absolute;
+      bottom: 20px;
+      width: calc(100% - 40px);
     }
   }
+}

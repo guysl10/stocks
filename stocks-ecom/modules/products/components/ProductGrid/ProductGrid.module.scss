@@ -1,3 +1,50 @@
+.loadMoreContainer{
+    margin-top: 20px;
+}
+
 .gridContainer{
-    padding:20px;
-} 
+    margin: 0px auto;
+    width: 1540px !important;
+    margin-top: 20px;
+
+
+    @media only screen and (max-width: 531px) {
+        width: calc(100% - 40px)!important;
+        margin: 0px 20px;
+    }
+
+    @media only screen and (min-width: 532px) {
+        width: 492px !important; // two columns
+    }
+
+    @media only screen and (min-width: 794px) {
+        width: 754px !important; // three columns
+    }
+
+    @media only screen and (min-width: 1056px) {
+        width: 1016px !important; // four columns
+    }
+
+    @media only screen and (min-width: 1318px) {
+        width: 1278px !important;
+    }
+
+    @media only screen and (min-width: 1570px) {
+        width: 1540px !important;
+    }
+    &.withSearch{
+        margin: 0px auto;
+
+        @media only screen and (min-width: 974px) {
+            width: 492px !important; // two columns
+        }
+
+        @media only screen and (min-width: 1230px) {
+            width: 754px !important; // three columns
+        }
+
+        @media only screen and (min-width: 1508px) {
+            width: 1016px !important; //four columns
+        }
+    }
+}

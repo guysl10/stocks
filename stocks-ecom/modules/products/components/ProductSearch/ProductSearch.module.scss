@@ -1,80 +1,11 @@
-.filterContainer {
-  padding-left: 25px;
-  .filePath {
-    padding-top: 34px;
-    .cart {
-      color: purple;
-      padding-left: 9px;
+.filterWrapper{
+  padding: 40px;
+  .filterContainer {
+    width: 400px;
+    padding: 0px 5%;
+    @media only screen and (max-width: 973px) {
+      display: none;
     }
   }
-  .itemName {
-    padding-top: 28px;
-  }
-  .filter {
-    border-bottom: 1px solid #d1d1d1;
-    padding-top: 55px;
-    padding-bottom: 21px;
-    .filterClear {
-      color: purple;
-      font-weight: bold;
-    }
-  }
-  .sizeContainer {
-    border-bottom: 1px solid #d1d1d1;
-    padding-top: 25px;
-    padding-bottom: 31px;
-  }
-  .colorContainer {
-    border-bottom: 1px solid #d1d1d1;
-    padding-top: 25px;
-    padding-bottom: 34px;
-    .black {
-      border-radius: 50%;
-      background: black;
-    }
-    .yellow {
-      border-radius: 50%;
-      background: yellow;
-    }
-    .blue {
-      border-radius: 50%;
-      background: blue;
-    }
-    .pink {
-      border-radius: 50%;
-      background: pink;
-    }
-    .green {
-      border-radius: 50%;
-      background: green;
-    }
-    .red {
-      border-radius: 50%;
-      background: red;
-    }
-    .purple {
-      border-radius: 50%;
-      background: purple;
-    }
-    .grey {
-      border-radius: 50%;
-      background: grey;
-    }
-  }
-  .priceContainer {
-    padding-top: 25px;
-    .priceRange {
-      padding-bottom: 39px;
-      .range {
-        font-size: 12px;
-      }
-      .price {
-        font-size: 12px;
-        color: purple;
-      }
-    }
-    .slider {
-      color: #000000;
-    }
-  }
+
 }
