@@ -1,5 +1,8 @@
 .filterWrapper{
   padding: 40px;
+  @media only screen and (max-width: 973px) {
+    padding-top: 0px;
+  }
   .filterContainer {
     width: 400px;
     padding: 0px 5%;

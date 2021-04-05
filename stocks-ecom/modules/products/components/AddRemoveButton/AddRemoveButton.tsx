@@ -8,15 +8,15 @@ import { updateCartItemQuantityService } from '../../../cart/shared/cartService'
 import { ICartItem } from '../../../cart/shared/cart.type';
 import { updateLoginRegisterDialogState } from '../../../layout/components/Layout/redux/layout.action';
 
-function AddRemoveButton({ product, cartItem }: {product: Product, cartItem: ICartItem }) {
+function AddRemoveButton({ product, cartItem }: {product?: Product, cartItem?: ICartItem}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.authState.isUserLoggedIn);
   const [quantity, setQuantity] = useState(product?.quantity || cartItem?.quantity || 0);
 
   useEffect(() => {
-    setQuantity(product?.quantity || 0);
-  }, [product]);
+    setQuantity(product?.quantity || cartItem?.quantity || 0);
+  }, [product, cartItem]);
 
   const updateQuantity = async (newQuantity) => {
     const productRecord = product || cartItem.product;
@@ -79,5 +79,5 @@ function AddRemoveButton({ product, cartItem }: {product: Product, cartItem: ICa
     </div>
   );
 }
-
+AddRemoveButton.defaultProps = { product: null, cartItem: null };
 export default AddRemoveButton;

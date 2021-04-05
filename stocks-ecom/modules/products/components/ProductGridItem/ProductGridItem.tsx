@@ -6,8 +6,8 @@ import AddRemoveButton from '../AddRemoveButton/AddRemoveButton';
 
 export default function ProductGridItem({ product }: {product:Product}) {
   return (
-    <Grid item>
-      <Grid item className={classes.socksContainer}>
+    <Grid item className={classes.productItemContainerWrapper}>
+      <Grid item className={classes.productItemContainer}>
         <Grid container className={classes.imageContainer} alignItems="center" justify="center">
           <img
             src={product.imageUrl}
