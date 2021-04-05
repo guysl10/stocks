@@ -1,0 +1,10 @@
+<app-secondary-header
+  title="Orders"
+></app-secondary-header>
+<app-api-table
+  [actions]="orderTableActions"
+  [gridColumns]="columns"
+  (onDeleteRow)="deleteOrder($event)"
+  (onViewRow)="gotoOrderDetail($event)"
+  [gridDataService]="getOrderData"
+></app-api-table>

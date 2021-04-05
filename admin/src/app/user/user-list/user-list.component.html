@@ -1,0 +1,11 @@
+<app-secondary-header
+  title="Users"
+  rightLinkTitle="Add User"
+  rightLink="/users/add-user"
+></app-secondary-header>
+<app-api-table
+  [gridColumns]="columns"
+  (onDeleteRow)="deleteUser($event)"
+  (onEditRow)="gotoEditUser($event)"
+  [gridDataService]="getUserData"
+></app-api-table>

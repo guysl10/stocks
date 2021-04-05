@@ -1,0 +1,11 @@
+<app-secondary-header
+  title="Products"
+  rightLinkTitle="Add Product"
+  rightLink="/products/add-product"
+></app-secondary-header>
+<app-api-table
+  [gridColumns]="columns"
+  (onDeleteRow)="deleteProduct($event)"
+  (onEditRow)="gotoEditProduct($event)"
+  [gridDataService]="getProductData"
+></app-api-table>
