@@ -1,0 +1,15 @@
+<div class="flex">
+  <div class="flex-item">
+    <div style="display: block;">
+      <h2> Orders</h2>
+      <canvas baseChart height="100"
+              [datasets]="orderChartData"
+              [labels]="lineChartLabels"
+              [legend]="false"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins"></canvas>
+    </div>
+  </div>
+</div>

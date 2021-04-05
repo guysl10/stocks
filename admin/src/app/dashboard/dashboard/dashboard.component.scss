@@ -1,0 +1,40 @@
+.total-items {
+  margin-top: 20px;
+
+  .item {
+    width: 230px;
+    height: 100px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px rgba(51, 38, 174, 0.1);
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+
+    .title {
+      color: #818799;
+    }
+
+    .count {
+      color: #1C2A53;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+
+.graph-container {
+  box-shadow: 0px 1px 4px rgba(51, 38, 174, 0.1);
+  border-radius: 16px;
+  padding: 20px 30px;
+  background: #FFFFFF;
+  max-width: 500;
+}
+
+.label {
+  flex-grow: unset;
+  width: 61px;
+}
+
+.form-control {
+  max-width: 250px;
+}

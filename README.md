@@ -1,2 +1,2 @@
 # stocks
-Socks store
+Stocks store

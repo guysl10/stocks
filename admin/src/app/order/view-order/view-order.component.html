@@ -1,0 +1,37 @@
+<app-secondary-header
+  [title]="'Order #' + orderData.orderId"
+></app-secondary-header>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-bordered view-order-table">
+      <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of orderData.orderItems">
+        <td>
+          <div class="row product-image-container">
+            <div class="col-6">
+              <img [src]="item.productId.imageUrl"/>
+            </div>
+            <div class="col-6 title">
+              {{item.productId.name}}
+            </div>
+          </div>
+        </td>
+        <td>${{item.productPrice}}</td>
+        <td>{{item.quantity}}</td>
+        <td>${{item.quantity * item.productPrice}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <h4>
+      Total: ${{orderData.totalAmount}}
+    </h4>
+  </div>
+</div>

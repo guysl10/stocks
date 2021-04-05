@@ -1,0 +1,70 @@
+<div class="row" [formGroup]="formGroup">
+  <div class="col-12" [class.col-md-6]="!fullWidthControls" *ngFor="let formItem of formItems">
+    <div class="form-check" *ngIf="formItem.type === 'checkbox'">
+      <input class="form-check-input" type="checkbox" [formControlName]="formItem.name">
+      <label class="form-check-label">
+        {{formItem.label}}
+      </label>
+    </div>
+    <div class="form-group" *ngIf="formItem.type !== 'checkbox'">
+      <label>
+        <sup *ngIf="formItem.required" class="required-asterix">*</sup>
+        {{formItem.label}}
+      </label>
+
+      <!-- Email Field -->
+      <input type="email"
+             *ngIf="formItem.type === 'email'"
+             class="form-control"
+             [class.is-invalid]="formGroup.controls[formItem.name].errors && isFormSubmitted"
+             [formControlName]="formItem.name"
+             [placeholder]="formItem.placeholder"/>
+      <!-- Email Field Ends -->
+
+      <!-- Text Field -->
+      <input type="text"
+             *ngIf="formItem.type === 'text'"
+             class="form-control"
+             [class.is-invalid]="formGroup.controls[formItem.name].errors && isFormSubmitted"
+             [formControlName]="formItem.name"
+             [placeholder]="formItem.placeholder"/>
+      <!-- Text Field Ends -->
+
+      <!-- Password Field -->
+      <input
+        *ngIf="formItem.type === 'password'"
+        type="password"
+        class="form-control"
+        [class.is-invalid]="formGroup.controls[formItem.name].errors && isFormSubmitted"
+        [formControlName]="formItem.name"
+        [placeholder]="formItem.placeholder"/>
+      <!-- Password Field Ends -->
+
+      <!-- Password Field -->
+      <textarea
+        *ngIf="formItem.type === 'textarea'"
+        class="form-control"
+        [class.is-invalid]="formGroup.controls[formItem.name].errors && isFormSubmitted"
+        [formControlName]="formItem.name"
+        [placeholder]="formItem.placeholder"></textarea>
+      <!-- Password Field Ends -->
+
+      <!-- Select Field -->
+      <select
+        *ngIf="formItem.type === 'select'"
+        class="form-control"
+        [class.is-invalid]="formGroup.controls[formItem.name].errors && isFormSubmitted"
+        [formControlName]="formItem.name">
+        <option *ngFor="let option of formItem.options" [value]="option.value">{{option.label}}</option>
+      </select>
+      <!-- Select Field Ends -->
+
+      <div *ngIf="isFormSubmitted && formGroup.controls[formItem.name].errors" class="invalid-feedback">
+        <div *ngIf="formGroup.controls[formItem.name].errors.required">{{formItem.label}} is required.</div>
+        <div *ngIf="!formGroup.controls[formItem.name].errors.required">Please provide
+          valid {{formItem.label.toLowerCase()}}.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

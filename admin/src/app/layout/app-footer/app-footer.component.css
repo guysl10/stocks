@@ -1,0 +1,12 @@
+.footer {
+  border-top: 1px solid rgba(67, 89, 102, 0.1);
+  color: #58666e;
+  text-align: center;
+  padding: 20px 0px;
+}
+
+.footer-wrapper {
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+}

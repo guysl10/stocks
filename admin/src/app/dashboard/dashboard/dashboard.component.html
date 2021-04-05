@@ -1,0 +1,34 @@
+<div class="container">
+  <app-secondary-header
+    title="Dashboard"
+  ></app-secondary-header>
+  <div class="row">
+    <div class="col label" style="text-align:right; padding-top: 6px;">
+      Period:
+    </div>
+    <div class="col-10">
+      <input type="text"
+             ngxDaterangepickerMd
+             [(ngModel)]="selectedDateRange"
+             class="form-control"
+             [ranges]="ranges"
+             [showCustomRangeLabel]="true"
+             (datesUpdated)="onRangeUpdate($event)"
+             [alwaysShowCalendars]="true"/>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between total-items flex-wrap">
+    <div class="item" *ngFor="let totalItem of totalItems">
+      <span class="title">{{totalItem.title}} </span> <br/>
+      <span class="count">{{totalItem.isMoney ? '$' : ''}} {{totalItem.count}} </span>
+    </div>
+  </div>
+
+  <div class="row nopadding">
+    <div class="col-12 graph-container">
+      <app-dashboard-orders-chart [orderData]="orderChartData"
+                                  [dateRange]="selectedDateRange"></app-dashboard-orders-chart>
+    </div>
+  </div>
+</div>
