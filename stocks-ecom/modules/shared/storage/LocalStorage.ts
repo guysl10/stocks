@@ -12,7 +12,6 @@ class LocalStorageClass {
       // eslint-disable-next-line no-undef
       this.localStorage = window.localStorage;
     } catch (e) {
-      // this.localStorage = {};
     }
   }
 
@@ -28,7 +27,7 @@ class LocalStorageClass {
     this.localStorage.removeItem(key);
   }
 
-  setJSONItem(key: string, value: any) { {
+  setJSONItem(key: string, value: any) {
     const updateValue = JSON.stringify(value);
     this.localStorage.setItem(key, updateValue);
   }
