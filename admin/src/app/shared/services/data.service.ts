@@ -107,7 +107,7 @@ export class DataService {
     }
     headers = new HttpHeaders(merge(headers, this.headers));
     return this.http
-      .request(method, url, {body, headers, params: searchParams});
+      .request(method, "http://localhost:9001" + url, {body, headers, params: searchParams});
   }
 
   private handleSubscribe({res, subscriber, successMessage, showLoader, errorMessage, showErrorMessage}) {

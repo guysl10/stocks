@@ -38,7 +38,7 @@ export class LoginComponent {
         this.localStorage.setJSON('userInfo', loginResponse);
         this.localStorage.set('accessToken', loginResponse.accessToken);
         this.localStorage.set('refreshToken', loginResponse.refreshToken);
-        await this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/dashboard"]);
       }
     } catch (exception) {
       this.errorMessage = get(exception, 'error.message') || 'Unknown error in login';
