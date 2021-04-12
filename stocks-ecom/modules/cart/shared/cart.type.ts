@@ -5,4 +5,5 @@ export interface ICartItem {
   productId: string;
   productPrice: number;
   quantity: number;
+  cartItemTotal: number;
 }

@@ -1,4 +1,4 @@
-mport React from 'react';
+import React from 'react';
 import ProductGrid from '../../products/components/ProductGrid/ProductGrid';
 import { getHomePageProducts } from '../shared/homeService';
 

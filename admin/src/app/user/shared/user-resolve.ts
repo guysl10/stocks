@@ -13,7 +13,7 @@ export class UserResolve implements Resolve<any> {
     try {
       return await this.userService.getUser(route.params.userId);
     } catch (e) {
-      await this.router.navigate(['/users']);
+      this.router.navigate(['/users']);
     }
   }
 }

@@ -1,79 +1,75 @@
-import React, { useContext, useRef } from 'react';
-import { Controller } from 'react-hook-form';
-import { get } from 'lodash';
-import Label from './Label/Label';
-import styles from './Form.module.scss';
-import { FormContext } from './Form';
-import { ISelectFieldProps } from './FormInputs/Select';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import {
+  Input, Password, Checkbox, TextArea, Select, TagInput, ImageInput,
+} from './FormInputs';
+import FormItem, { IFieldProps } from './FormItem';
+import FIELD_TYPES from './FieldTypes';
 
-export interface IFieldProps {
-  value?: string | number | Array<any>,
-  name: string,
-  type: string,
-  label: string,
-  required?: boolean,
-  onChange?: (any)=>void,
-  fieldProps?: ISelectFieldProps,
-  validations?: any
-}
+const fieldMap = {
+  [FIELD_TYPES.TEXT_AREA]: TextArea,
+  [FIELD_TYPES.CHECKBOX]: Checkbox,
+  [FIELD_TYPES.TAG_INPUT]: TagInput,
+  [FIELD_TYPES.IMAGE_INPUT]: ImageInput,
+  [FIELD_TYPES.INPUT]: Input,
+  [FIELD_TYPES.PHONE]: Input,
+  [FIELD_TYPES.EMAIL]: Input,
+  [FIELD_TYPES.SELECT]: Select,
+  [FIELD_TYPES.PASSWORD]: Password,
+};
 
-interface IFormItemProps extends IFieldProps{
-  children: React.ReactNode,
-}
-
-export default function FormItem({
-                                   children, label, name, required, validations,
-                                 }: IFormItemProps) {
-  const { form } = useContext(FormContext);
-  const fieldRef = useRef();
-  const errorMessage = get(form, `errors.${name}.message`);
-  const requiredMessage = `${label || name} is required.`;
-  // @ts-ignore
+export const FieldItem = (fieldProp: IFieldProps) => {
+  const Component = fieldMap[fieldProp.type];
+  const formItemProps: IFieldProps = { ...fieldProp };
+  if (fieldProp.type === FIELD_TYPES.CHECKBOX) {
+    delete formItemProps.label;
+  } else if (fieldProp.type === FIELD_TYPES.EMAIL) {
+    formItemProps.validations = {
+      ...formItemProps.validations,
+      validate: (value) => {
+        if (
+          value
+          && !value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+        ) {
+          return 'Invalid email address.';
+        }
+        // no message
+      },
+    };
+  } else if (fieldProp.type === FIELD_TYPES.PHONE) {
+    formItemProps.validations = {
+      ...formItemProps.validations,
+      validate: (value) => {
+        if (
+          value
+          && !value.match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)
+        ) {
+          return 'Invalid phone number';
+        }
+        // no message
+      },
+    };
+  }
   return (
-    <div className={styles.formInput}>
-      {label ? <Label text={label} required={required} /> : null}
-      {
-        React.Children.map(children, (child) => (
-          <Controller
-            render={({ value, onChange, onBlur }) => {
-              // @ts-ignore
-              const childProps: IFormItemProps = child.props;
-              return (
-                // @ts-ignore
-                <child.type
-                  // label={label}
-                  // name={name}
-                  value={value}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  fieldRef={fieldRef}
-                  // eslint-disable-next-line  react/jsx-props-no-spreading
-                  {...childProps}
-                  // {...otherParams}
-                />
-              );
-            }}
-            onFocus={() => {
-              // @ts-ignore
-              if (fieldRef && fieldRef.current && fieldRef.current.focus) {
-                // @ts-ignore
-                fieldRef.current.focus();
-              }
-            }}
-            name={name}
-            // @ts-ignore
-            control={form.control}
-            rules={{ required: required ? requiredMessage : undefined, ...(validations || {}) }}
-          />
-        ))
-      }
-      {
-        errorMessage ? (
-          <div className={styles.errorMessage}>
-            {errorMessage}
-          </div>
-        ) : null
-      }
-    </div>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <FormItem {...formItemProps}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...formItemProps} />
+    </FormItem>
   );
-}
+};
+
+export const FormItems = ({ fields }: {fields: Array<IFieldProps>}) => (
+  <Grid container>
+    {fields.map((fieldProp) => (
+      <Grid
+        item
+        key={fieldProp.name}
+        xs={12}
+      >
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <FieldItem {...fieldProp} />
+      </Grid>
+    ))}
+  </Grid>
+);
