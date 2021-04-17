@@ -22,7 +22,7 @@ class Auth extends BaseModule {
   async login(req) {
     const { email, password } = req.body;
     this.__validateEmailPassword({ email, password });
-    const user = await this.__getUser({ email, password, role: this.userRoles.ECOM_USER });
+    const user = await this.__getUser({ email, password, role: this.userRoles.ECOM_USER || this.userRoles.ADMIN });
     const accessTokenRecord = await this.__getAccessToken(user);
     userController.setUserOnlineState({ userId: user._id, state: USER_ONLINE_STATES.ONLINE });
     const userDetails =  await this.__validateAccessTokenAndGetUser(accessTokenRecord.accessToken);
@@ -33,7 +33,7 @@ class Auth extends BaseModule {
   async adminLogin(req) {
     const { email, password } = req.body;
     this.__validateEmailPassword({ email, password });
-    const user = await this.__getUser({ email, password, role: this.userRoles.ADMIN });
+    const user = await this.__getAdmin({ email, password, role: this.userRoles.ADMIN });
     const accessTokenRecord = await this.__getAccessToken(user);
     return await this.__validateAccessTokenAndGetUser(accessTokenRecord.accessToken);
   }
@@ -97,7 +97,16 @@ class Auth extends BaseModule {
     };
   }
 
-  async __getUser({ email, password, role }) {
+  async __getUser({ email, password }) {
+    password = passwordManager.encryptPassword(password);
+    const user = await UserModel.findOne({ email, password }, userReturnFields).lean();
+    if (!user) {
+      throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Email or password does not match.');
+    }
+    return user;
+  }
+
+  async __getAdmin({ email, password, role }) {
     password = passwordManager.encryptPassword(password);
     const user = await UserModel.findOne({ email, password, role }, userReturnFields).lean();
     if (!user) {
