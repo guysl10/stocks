@@ -12,7 +12,7 @@ export class Product {
 
   imageUrl: string;
 
-  sortDescription: string;
+  shortDescription: string;
 
   longDescription: string;
 

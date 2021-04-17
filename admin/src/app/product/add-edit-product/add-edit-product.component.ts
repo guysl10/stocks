@@ -45,7 +45,7 @@ export class AddEditProductComponent implements OnInit {
       required: true,
       options: PRODUCT_SIZES.map((size) => ({value: size, label: size}))
     },
-    {label: 'Sort Description', name: 'sortDescription', type: eFormItemType.TEXTAREA, required: true},
+    {label: 'Short Description', name: 'shortDescription', type: eFormItemType.TEXTAREA, required: true},
     {label: 'Long Description', name: 'longDescription', type: eFormItemType.TEXTAREA, required: true},
     {label: 'Home Product', name: 'isHomePageProduct', type: eFormItemType.CHECKBOX, required: true},
     {
@@ -59,7 +59,7 @@ export class AddEditProductComponent implements OnInit {
     if (this.isEdit) {
       this.productId = this.route.snapshot.data.product._id;
       setTimeout(() => {
-        const productFormValue = pick(this.route.snapshot.data.product, ['name', 'isHomePageProduct', 'price', 'color', 'size', 'sortDescription', 'longDescription', 'imageUrl']);
+        const productFormValue = pick(this.route.snapshot.data.product, ['name', 'isHomePageProduct', 'price', 'color', 'size', 'shortDescription', 'longDescription', 'imageUrl']);
         this.productFormGroup.setValue(productFormValue);
       }, 200);
     }

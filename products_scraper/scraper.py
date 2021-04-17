@@ -35,7 +35,7 @@ def prepare_items_to_db(products):
             "imageUrl": image_url,
             "isHomePageProduct": True,
             "name": name,
-            "sortDescription": name,
+            "shortDescription": name,
             "longDescription": name,
             "price": price,
             "color": random.choice(PRODUCT_COLORS),

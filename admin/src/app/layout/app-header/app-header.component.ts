@@ -41,7 +41,7 @@ export class AppHeaderComponent {
       this.localStorage.remove("accessToken");
       this.localStorage.remove("userInfo");
       this.localStorage.remove("refreshToken");
-      this.router.navigate(["/login"]);
+      await this.router.navigate(["/login"]);
     }
   }
 }
