@@ -19,6 +19,7 @@ export class UserService {
       url: `/api/v1/users/${userId}`,
       method: 'delete',
       successMessage: 'User deleted successfully.',
+      showMessageError: true,
       errorMessage: 'Error in deleting the user.'
     }).toPromise();
   }

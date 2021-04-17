@@ -42,7 +42,6 @@ export class DataService {
             showErrorMessage
           }),
           (err) => {
-            console.log(err);
             if (get(err, 'error.error.name') === 'TokenExpired'
               || get(err, 'error.error.name') === 'InvalidToken') {
               this.generateTokenByRefreshToken()
@@ -127,7 +126,7 @@ export class DataService {
     if (get(err, 'error.error.Name') === 'JsonWebTokenError') {
       this.logout();
     }
-    errorMessage = showErrorMessage ? (get(err, 'error.error.Message') || errorMessage || 'Something went wrong.') : null;
+    errorMessage = showErrorMessage ? (get(err, 'error.error.message') || errorMessage || 'Something went wrong.') : null;
     if (errorMessage) {
       this.appUtil.showNotification({message: errorMessage, type: 'error'});
     }

@@ -1,6 +1,8 @@
+const { USER_ONLINE_STATES } = require('./user.constants');
 const UserModel = require('./user.model');
 const BaseModule = require('../base-module');
 const passwordManager = require('../auth/password-manager');
+const Order = require('../orders/order')
 
 class User extends BaseModule {
   constructor() {
@@ -49,6 +51,9 @@ class User extends BaseModule {
     if(!user) {
       throw new this.Exception(this.EXCEPTIONS.ObjectNotFound, 'User not found.');
     }
+    if(user.onlineState == USER_ONLINE_STATES.ONLINE){
+      throw new this.Exception(this.EXCEPTIONS.Forbidden, 'Delete online user is forbidden.');
+    }
     return user;
   }
 
@@ -68,7 +73,12 @@ class User extends BaseModule {
 
   async deleteUser(req) {
     await this.__getUser(req);
+    const  orders = await Order.getOrdersByQuery({userId: req.params.userId})
+    if(orders.length > 0){
+      throw new this.Exception(this.EXCEPTIONS.Forbidden, "User has active orders.");
+    }
     await UserModel.remove({ _id: req.params.userId });
+
   }
 
   async getUserList({ query }) {

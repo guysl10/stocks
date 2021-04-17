@@ -1,6 +1,8 @@
 const ProductModel = require('./product.model');
 const BaseModule = require('../base-module');
 const { productSizes, productColors } = require('./product-constants');
+const Order = require('../orders/order')
+
 
 class Product extends BaseModule {
   constructor() {
@@ -63,6 +65,10 @@ class Product extends BaseModule {
 
   async deleteProduct(req) {
     await this.__getProduct(req);
+    const orders = await Order.getOrdersByQuery({"orderItems.productId": req.params.productId})
+    if(orders.length > 0){
+      throw new this.Exception(this.EXCEPTIONS.Forbidden, "Product is in active orders.");
+    }
     await ProductModel.remove({ _id: req.params.productId });
   }
 

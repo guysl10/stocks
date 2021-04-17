@@ -19,6 +19,7 @@ export class ProductService {
       url: `/api/v1/products/${productId}`,
       method: 'delete',
       successMessage: 'Product deleted successfully.',
+      showMessageError: true,
       errorMessage: 'Error in deleting the product.'
     }).toPromise();
   }
