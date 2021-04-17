@@ -10,11 +10,17 @@ class Dashboard extends BaseModule {
 
   async getCounts({ query: { startDate, endDate } }) {
     this.validateDateRange({ startDate, endDate });
-    const query = { CreatedAt: { $gte: Number(startDate), $lte: Number(endDate) } };
+    const query = { createdAt: { $gte: Number(startDate), $lte: Number(endDate) } };
     const totalOrders = await OrderModel.countDocuments(query);
+    const totalOrderData = await OrderModel.aggregate([
+      { $match: { createdAt: { $gte: new Date(Number(startDate)), $lte: new Date(Number(endDate)) } } },
+      { $group: { _id: 1, count: { $sum: '$totalAmount' } } }
+    ]);
+    let totalOrderAmount = totalOrderData && totalOrderData[0] ? totalOrderData[0].count : 0;
+    totalOrderAmount = this.utils.convertToMoney(totalOrderAmount);
     const newProducts = await ProductModel.countDocuments(query);
     const newUsers = await UserModel.countDocuments(query);
-    return { totalOrders, newProducts, newUsers };
+    return { totalOrders, totalOrderAmount, newProducts, newUsers };
   }
 
   async getDailyOrderCounts({ query: { startDate, endDate, timezone } }) {
@@ -23,10 +29,10 @@ class Dashboard extends BaseModule {
     }
     this.validateDateRange({ startDate, endDate });
     return await OrderModel.aggregate([
-      { $match: { CreatedAt: { $gte: new Date(Number(startDate)), $lte: new Date(Number(endDate)) } } },
+      { $match: { createdAt: { $gte: new Date(Number(startDate)), $lte: new Date(Number(endDate)) } } },
       {
         $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$CreatedAt', timezone } },
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt', timezone } },
           count: { $sum: 1 }
         }
       },
