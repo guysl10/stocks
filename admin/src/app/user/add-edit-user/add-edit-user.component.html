@@ -1,0 +1,16 @@
+<app-secondary-header
+  [title]="isEdit? 'Edit User': 'Add User'"
+></app-secondary-header>
+
+<div class="card">
+  <form [formGroup]="userFormGroup" (ngSubmit)="addEditUser()" class="form-container card-body">
+    <app-form-item-builder
+      [formItems]="userFormItems"
+      [formGroup]="userFormGroup"
+      [isFormSubmitted]="isFormSubmitted"
+    ></app-form-item-builder>
+    <button class="btn btn-primary" [disabled]="isLoading">
+      {{isEdit ? 'Edit User' : 'Add User'}}
+    </button>
+  </form>
+</div>

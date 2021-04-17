@@ -1,0 +1,11 @@
+.mobileFilterContainer{
+  width: 100%;
+  @media only screen and (min-width: 974px) {
+    display: none;
+  }
+  .filterIcon{
+    img{
+      height: 15px;
+    }
+  }
+}

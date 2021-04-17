@@ -1,0 +1,13 @@
+.gridContainer {
+  height: calc(100vh - 269px);
+  width: 100%;
+  padding: 1;
+}
+
+.pagination-container {
+  padding: 10px 0;
+
+  ::ng-deep ul {
+    margin-bottom: 0;
+  }
+}

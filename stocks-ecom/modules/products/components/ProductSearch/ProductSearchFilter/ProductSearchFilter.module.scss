@@ -1,0 +1,96 @@
+.productSearchCount{
+  @media only screen and (max-width: 974px) {
+    display: none;
+  }
+}
+.filterContainer {
+  padding-left: 25px;
+  @media only screen and (max-width: 974px) {
+    padding: 25px;
+  }
+  .done{
+    @media only screen and (min-width: 973px) {
+      display: none;
+    }
+    margin-top: 20px;
+  }
+  .itemName {
+    padding-top: 28px;
+  }
+  .filter {
+    border-bottom: 1px solid #d1d1d1;
+    padding-top: 30px;
+    @media only screen and (max-width: 974px) {
+      padding-top: 0px;
+    }
+    .filterClear {
+      color: purple;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  }
+  .sizeContainer, .colorFilterContainer, .priceFilterContainer {
+    border-bottom: 1px solid #d1d1d1;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    min-width: 100%;
+  }
+  .filterTitle{
+    font-weight: 500;
+    padding-bottom: 5px;
+  }
+  .colorFilterContainer{
+    .colorContainer {
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 6px;
+      &.active{
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+      }
+      .color{
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+      }
+      .black{
+        background: black;
+      }
+      .yellow{
+        background: #d0d027;
+      }
+      .blue{
+        background: #5555f1;
+      }
+      .pink{
+        background: pink;
+      }
+      .green{
+        background: green;
+      }
+      .red{
+        background: red;
+      }
+      .purple{
+        background: purple;
+      }
+      .gray{
+        background: gray;
+      }
+    }
+  }
+  .priceFilterContainer {
+    .priceRange {
+      // padding-bottom: 39px;
+      .range {
+        font-size: 12px;
+      }
+      .price {
+        font-size: 12px;
+        color: purple;
+      }
+    }
+    .slider {
+      color: #000000;
+    }
+  }
+}

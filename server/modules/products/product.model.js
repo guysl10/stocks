@@ -12,7 +12,7 @@ class Product extends BaseModel {
         color: { type: String, enum: productColors },
         price: { type: Number },
         imageUrl: { type: String },
-        sortDescription: { type: String },
+        shortDescription: { type: String },
         longDescription: { type: String },
         ...this.defaultParams
       },
