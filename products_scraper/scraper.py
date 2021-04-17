@@ -33,6 +33,7 @@ def prepare_items_to_db(products):
         name = product["title"]
         items_to_db.append({
             "imageUrl": image_url,
+			"createdAt": datetime.datetime.now(),
             "isHomePageProduct": True,
             "name": name,
             "shortDescription": name,
