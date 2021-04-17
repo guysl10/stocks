@@ -8,7 +8,7 @@ class Product extends BaseModule {
   }
 
   async __validateProductData(req) {
-    const { name, color, size, price, imageUrl, sortDescription, longDescription } = req.body;
+    const { name, color, size, price, imageUrl, shortDescription, longDescription } = req.body;
     if (!this.validator.isString(name)) {
       throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Please provide valid name.');
     }
@@ -24,8 +24,8 @@ class Product extends BaseModule {
     if (!this.validator.isPositiveNonZeroFloat(price)) {
       throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Please provide valid price value.');
     }
-    if (!this.validator.isString(sortDescription)) {
-      throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Please provide valid sort description.');
+    if (!this.validator.isString(shortDescription)) {
+      throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Please provide valid Short Description.');
     }
     if (!this.validator.isString(longDescription)) {
       throw new this.Exception(this.EXCEPTIONS.ValidationError, 'Please provide valid long description.');
