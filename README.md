@@ -1,18 +1,26 @@
 # Stocks
+
 Best socks store ever!!!!
-###Scrapper:
+
+##Scrapper:
+
+`cd products_scraper`
 
 `pip3 install -r requirements.txt`
 
 `python3 scrapper.py`
 
-###Server:
+##Server:
+
+`cd server`
 
 `npm install`
 
 `npm run start-server`
 
-###Admin:
+##Admin:
+
+`cd admin`
 
 `npm install`
 
@@ -20,7 +28,10 @@ Best socks store ever!!!!
 
 `ng serve`
 
-###Ecom:
+##Ecom:
+
+`cd stocks-ecom`
+
 `npm install`
 
 `npm run dev`
